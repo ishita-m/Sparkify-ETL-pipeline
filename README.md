@@ -42,7 +42,5 @@ This project leverages use of Star schema design. Please refer to the image belo
 
 ![Database table structure and relationship](Database-design.jpg)
 
-State and justify your database schema design and ETL pipeline.
-
 
 

@@ -6,6 +6,13 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    '''
+    - Fetches data from json song file.
+    
+    - Loads relevant data into songs table.
+    
+    - Loads relevant data into artists table.
+    '''
     # open song file
     df = pd.read_json(filepath, lines=True)
 
@@ -19,6 +26,17 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    '''
+    - Fetches data from json log file.
+    
+    - Filters data based on NextSong action.
+    
+    - Tranforms and loads data into time table.
+    
+    - Loads relevant data into users table.
+    
+    - Inserts data into songplays table by fetching data from  songs table, artists table along with log data from json files.
+    '''
     # open log file
     df = pd.read_json(filepath, lines=True)
 
@@ -26,7 +44,6 @@ def process_log_file(cur, filepath):
     df = df[df['page']=='NextSong']
 
     # convert timestamp column to datetime
-#     t = 
     time_df = df[['ts']]
     time_df['start_time'] = pd.to_datetime(time_df['ts'], unit='ms')
     time_df['hour'] = time_df['start_time'].dt.hour
@@ -37,8 +54,6 @@ def process_log_file(cur, filepath):
     time_df['weekday'] = time_df['start_time'].dt.weekday
     
     # insert time data records
-#     time_data = 
-#     column_labels = 
     time_df = time_df[['start_time','hour', 'day', 'week', 'month', 'year', 'weekday']]
 
     for i, row in time_df.iterrows():
@@ -70,6 +85,13 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    '''
+    - Iterates over all the files present in the filepath argument.
+    
+    - Executes ETL For each file object by calling process_song_file or process_log_file internally.
+    
+    - Commits the data ingested into the database.
+    '''
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -89,7 +111,14 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    """
+    - Establishes connection with the sparkify database and gets
+    cursor to it.  
     
+    - Performs ETL and ingests data into all the tables  
+    
+    - Finally, closes the connection. 
+    """
     try:
         conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
         cur = conn.cursor()
