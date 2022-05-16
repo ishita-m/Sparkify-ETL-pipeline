@@ -38,9 +38,9 @@ In order to run ETL pipeline, run the following commands in your terminal:
 
 ## Database design
 
-This project leverages use of Star schema design.
+This project leverages use of Star schema design. Please refer to the image below for reference:
 
-[![An old rock in the desert](Database-design.jpg)]
+![Database table structure and relationship](Database-design.jpg)
 
 State and justify your database schema design and ETL pipeline.
 
