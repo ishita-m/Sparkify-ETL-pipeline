@@ -40,7 +40,7 @@ In order to run ETL pipeline, run the following commands in your terminal:
 
 This project leverages use of Star schema design.
 
-> will add 
+[![An old rock in the desert](database-design.jpg)]
 
 State and justify your database schema design and ETL pipeline.
 
